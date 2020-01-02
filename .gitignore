@@ -1,0 +1,5 @@
+
+.vscode/.ropeproject/config.py
+.vscode/.ropeproject/objectdb
+*.data
+*.csv
