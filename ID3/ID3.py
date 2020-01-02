@@ -42,7 +42,7 @@ def id3(dataset, tree, attribute_num=None):
     if top_entropy == 0:
         for k, v in top_class_set.items():
             if v != 0:
-                return {k: {}}
+                return {'root': k}
 
     # 計算資料表中最小的 entropy
     mini_entropy = {'a_index': -1, 'guard': None, 'entropy': float('inf')}
@@ -117,8 +117,17 @@ def id3(dataset, tree, attribute_num=None):
     }
     return result
 
-def draw_tree(tree, attribute, space=''):
-    print()
+def draw_tree(tree, attribute, level=0):
+    padding = '__' * level
+    if 'context' in tree:
+        print(attribute[result['root']])
+        print('{}{}{}'.format(padding, '<=', tree['context']['guard']), end='---')
+        draw_tree(tree['context']['child'][0], attribute, level+1)
+        print('{}{}{}'.format(padding, '>', tree['context']['guard']), end='---')
+        draw_tree(tree['context']['child'][1], attribute, level+1)
+    else:
+        print(tree['root'])
+
 
 if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__))
@@ -144,6 +153,9 @@ if __name__ == "__main__":
     }
     '''
     result = id3(dataset, TREE)
+    print(result)
     attribute = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+    print('\n\n**********\n\n')
+    # print(attribute[result['root']])
     draw_tree(result, attribute)
     
