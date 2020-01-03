@@ -12,7 +12,7 @@ def my_entropy(i):
         return i * math.log(i, 2)
 
 
-def id3(dataset, tree, attribute_num=None):
+def id3(dataset, attribute_num=None):
     # 算出預設屬性個數
     if attribute_num is None:
         attribute_num = len(dataset[0]) - 1
@@ -104,8 +104,8 @@ def id3(dataset, tree, attribute_num=None):
     #     print(i, x)
     # input()
     child_trees = [None] * 2
-    child_trees[0] = id3(newdataset[:split_index], tree, attribute_num)
-    child_trees[1] = id3(newdataset[split_index:], tree, attribute_num)
+    child_trees[0] = id3(newdataset[:split_index], attribute_num)
+    child_trees[1] = id3(newdataset[split_index:], attribute_num)
     result = {
         'root': mini_entropy['a_index'],
         'context': {
@@ -137,7 +137,6 @@ if __name__ == "__main__":
             if temp != '':
                 dataset.append(temp.split(','))
 
-    TREE = {} 
     '''
     TREE = {
         'root': 'petal_length',
@@ -150,7 +149,7 @@ if __name__ == "__main__":
         }
     }
     '''
-    result = id3(dataset, TREE)
+    result = id3(dataset)
     print(result)
     attribute = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
     print('\n\n**********\n\n')
