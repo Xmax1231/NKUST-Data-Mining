@@ -92,12 +92,10 @@ def id3(dataset, tree, attribute_num=None):
     # 將資料表二分 並遞迴下去
     # Do something.
     newdataset = sorted(dataset, key=lambda a:a[mini_entropy['a_index']])
-    split_index = len(newdataset)//2
-    for i in range(len(newdataset)):
+    split_index = len(newdataset) - 1
+    while True:
         if mini_entropy['guard'] < newdataset[split_index][mini_entropy['a_index']]:
             split_index -= 1
-        elif mini_entropy['guard'] > newdataset[split_index][mini_entropy['a_index']]:
-            split_index += 1
         else:
             split_index += 1
             break
@@ -130,7 +128,7 @@ def draw_tree(tree, attribute, level=0):
 
 
 if __name__ == "__main__":
-    os.chdir(os.path.dirname(__file__))
+    os.chdir(os.path.dirname(os.path.realpath(__file__)))
     dataset = []
     filename = 'iris.data'
     with open(filename, 'r') as f:
