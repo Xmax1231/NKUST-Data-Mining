@@ -116,9 +116,9 @@ def id3(dataset, attribute_num=None):
     return result
 
 def draw_tree(tree, attribute, level=0):
-    padding = '__' * level
+    padding = '\t\t' * level
     if 'context' in tree:
-        print(attribute[result['root']])
+        print(attribute[tree['root']])
         print('{}{}{}'.format(padding, '<=', tree['context']['guard']), end='---')
         draw_tree(tree['context']['child'][0], attribute, level+1)
         print('{}{}{}'.format(padding, '>', tree['context']['guard']), end='---')
@@ -150,7 +150,7 @@ if __name__ == "__main__":
     }
     '''
     result = id3(dataset)
-    print(result)
+    # print(result)
     attribute = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
     print('\n\n**********\n\n')
     # print(attribute[result['root']])

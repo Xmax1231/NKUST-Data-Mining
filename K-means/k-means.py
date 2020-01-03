@@ -3,6 +3,7 @@ import os
 import sys
 import math
 import csv
+import random
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn import datasets
@@ -29,8 +30,12 @@ def distance(a, b):
 def k_means(dataset, k=2):
     # 初始化群中心
     c_list = []
-    for x in range(k):
+    for _ in range(k):
+        x = random.randint(0, len(dataset)-1)
+        while dataset[x] in c_list:
+            x += 1
         c_list.append(dataset[x])
+    # print('c_list', c_list)
 
     # 初始化點標籤 (will be return
     d_labels = [-1] * len(dataset)
@@ -76,17 +81,18 @@ if __name__ == "__main__":
     #     [80, 11],
     #     [85, 17]
     # ]
-    # dataset = []
-    # with open('data.csv', 'r', encoding='utf8') as csvfile:
-    #     rows = csv.reader(csvfile)
-    #     for row in rows:
-    #         p = list(map(int, row))
-    #         dataset.append(p)
     # dataset = [[0, 0], [0, 1], [1, 1], [1, 0]]
+    # X1, y1=datasets.make_circles(n_samples=500, factor=0.5, noise=.05, random_state=9)
+    # X2, y2 = datasets.make_blobs(n_samples=100, n_features=2, centers=[[1.2,1.2]], cluster_std=[[.1]],random_state=9)
+    # dataset = np.concatenate((X1, X2))
 
-    X1, y1=datasets.make_circles(n_samples=500, factor=0.5, noise=.05, random_state=9)
-    X2, y2 = datasets.make_blobs(n_samples=100, n_features=2, centers=[[1.2,1.2]], cluster_std=[[.1]],random_state=9)
-    
-    dataset = np.concatenate((X1, X2))
+    filename = 'iris-12.csv'
+    dataset = []
+    with open(filename, 'r', encoding='utf8') as csvfile:
+        rows = csv.reader(csvfile)
+        for row in rows:
+            p = list(map(float, row))
+            dataset.append(p)
+            
     new_labels = k_means(dataset, 3)
     show_position(dataset, new_labels)

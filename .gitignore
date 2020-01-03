@@ -3,3 +3,5 @@
 .vscode/.ropeproject/objectdb
 *.data
 *.csv
+*.png
+*.txt
