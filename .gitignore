@@ -5,3 +5,6 @@
 *.csv
 *.png
 *.txt
+*.pyc
+*.zip
+*.dat
